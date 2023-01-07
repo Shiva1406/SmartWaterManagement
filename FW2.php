@@ -58,57 +58,118 @@ session_start();
   </nav>
   
   <div style="padding-top: 10%;padding-left: 8%;padding-right: 20%;">
+  
+  <!-- <th scope="col">FWNo</th>
+        <th scope="col">FWName</th>
+        <th scope="col">PumpCount</th>
+        <th scope="col">FWDate</th>
+        <th scope="col">FWTime</th>
+        <th scope="col">Inflow</th>
+        <th scope="col">Outflow</th>
+        <th scope="col">FWX</th>
+        <th scope="col">FWY</th> -->
+        <!-- <td><?php //echo $row['FWDate'] ?></td>
+        <td><?php //echo $row['FWTime'] ?></td>
+        <td><?php //echo $row['FWWaterInflow'] ?></td>
+        <td><?php //echo $row['WaterOutflow'] ?></td>
+        <td><?php //echo $row['FWX'] ?></td>
+        <td><?php //echo $row['FWY'] ?></td> -->
         <center>
-  <h3 style="color:rgb(0, 140, 255); padding-left: 5%;padding-top: 1%;letter-spacing: 1px; ">FRENCH WELLS</h3>
-
+        <?php
+         $servername = "localhost";
+         $username = "root";
+         $password = "";
+         $databasename = "watermanagementsystem";
+         
+         // CREATE CONNECTION
+         $conn = new mysqli($servername,
+             $username, $password, $databasename);
+         
+         // GET CONNECTION ERRORS
+         
+         if ($conn->connect_error) {
+             die("Connection failed: " . $conn->connect_error);
+         }
+         $search = $_SESSION['FWsrch'];
+         $sql = "SELECT * FROM FWgen WHERE FWNO= ?";
+            $statement = $conn->prepare($sql);
+            $statement->bind_param('i',$search);
+            $statement->execute();
+            $result = $statement->get_result();
+            while ($row = $result->fetch_assoc()) {
+                if (!empty($row)) {   
+                echo "<h3 style='color:rgb(0, 140, 255); padding-left: 5%;padding-top: 1%;letter-spacing: 1px;'>FWNO:".$row['FWNO']."</h3>";
+                }
+            }
+        ?>
+        
+        <?php
+  
+    // SQL QUERY
+    $query = "SELECT * FROM FWinfo WHERE FWNO=?;";
+    $statement = $conn->prepare($query);
+    $statement->bind_param('i',$_SESSION['FWsrch']);
+    $statement->execute();
+    
+    // FETCHING DATA FROM DATABASE
+    $result = $statement->get_result();
+    $q = "SELECT * FROM FWinfo WHERE FWNO IN (SELECT FWNO FROM FWinfo);";
+    $st = $conn->prepare($query);
+    $st->bind_param('i',$_SESSION['FWsrch']);
+    $st->execute();
+    $res = $st->get_result();
+    $r = $res->fetch_assoc();
+    if(empty($r)){
+        die("<center><h1 style='color:red ;padding-top:10%;padding-left:20%'>Record not found<h1></center>");
+    }
+    ?>
 <table class="table table-dark table-striped-columns">
     <thead>
-
       <tr>
-        <th scope="col">FWNO</th>
-        <th scope="col">FWX</th>
-        <th scope="col">FWY</th>
+        <th scope="col">FWNo</th>
+        <th scope="col">FWDate</th>
+        <th scope="col">Water Level</th>
+        <th scope="col">Turbidity</th>
+        <th scope="col">pH</th>
+        <th scope="col">Calcium</th>
+        <th scope="col">Copper</th>
+        <th scope="col">Zinc</th>
+        <th scope="col">Iron</th>
+        <th scope="col">Magnesium</th>
+        <th scope="col">Manganese</th>
+        <th scope="col">Chloride</th>
+        <th scope="col">Fluoride</th>
       </tr>
     </thead>
     <tbody>
-        <?php
-    
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $databasename = "watermanagementsystem";
-    
-    // CREATE CONNECTION
-    $conn = new mysqli($servername,
-        $username, $password, $databasename);
-    
-    // GET CONNECTION ERRORS
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    
-    // SQL QUERY
-    $query = "SELECT * FROM `FWgen`;";
-    
-    // FETCHING DATA FROM DATABASE
-    $result = $conn->query($query);
-    
-        while ($row=$result->fetch_assoc()){?>
+    <?php
+        while ($row=$result->fetch_assoc()){
+            if(!empty($row)){
+    ?>
         <tr>
         <td><?php echo $row['FWNO'] ?></td>
-        <td><?php echo $row['FWX'] ?></td>
-        <td><?php echo $row['FWY'] ?></td>
+        <td><?php echo $row['FWDATE'] ?></td>
+        <td><?php echo $row['WATERLEVEL'] ?></td>
+        <td><?php echo $row['TURBIDITY'] ?></td>
+        <td><?php echo $row['pH'] ?></td>
+        <td><?php echo $row['CALCIUM'] ?></td>
+        <td><?php echo $row['COPPER'] ?></td>
+        <td><?php echo $row['ZINC'] ?></td>
+        <td><?php echo $row['IRON'] ?></td>
+        <td><?php echo $row['MAGNESIUM'] ?></td>
+        <td><?php echo $row['MANGANESE'] ?></td>
+        <td><?php echo $row['CHLORIDE'] ?></td>
+        <td><?php echo $row['FLUORIDE'] ?></td>
       </tr>
-      <?php }?>
-</tbody>
+      <?php
+        }
+        
+    }
+
+        ?>
+    </tbody>
   </table>
   </center>
 </div>
-<p style="padding-left: 5%;padding-top: 1%;padding-right: 5%;font-size: larger;">
-<center>
-    <a href = "FW1.php" class="btn btn-outline-info">View FW Extended Data</a>
-  </form>
-  </center>
-
 </body>
-</html>
+<html>

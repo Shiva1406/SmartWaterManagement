@@ -8,6 +8,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </head>
+<?php
+session_start();
+?>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
@@ -53,5 +56,63 @@
       </div>
     </div>
   </nav>
+  
+  <div style="padding-top: 10%;padding-left: 8%;padding-right: 20%;">
+        <center>
+  <h3 style="color:rgb(0, 140, 255); padding-left: 5%;padding-top: 1%;letter-spacing: 1px; ">WATER DISTRIBUTION SYSTEM</h3>
+
+<table class="table table-dark table-striped-columns">
+    <thead>
+
+      <tr>
+        <th scope="col">WDSNo</th>
+        <th scope="col">WDSX</th>
+        <th scope="col">WDSY</th>
+        <th scope="col">WTPC</th>
+        <th scope="col">FWC</th>
+      </tr>
+    </thead>
+    <tbody>
+        <?php
+    
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $databasename = "watermanagementsystem";
+    
+    // CREATE CONNECTION
+    $conn = new mysqli($servername,
+        $username, $password, $databasename);
+    
+    // GET CONNECTION ERRORS
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    
+    // SQL QUERY
+    $query = "SELECT * FROM `wdsgen`;";
+    
+    // FETCHING DATA FROM DATABASE
+    $result = $conn->query($query);
+    
+        while ($row=$result->fetch_assoc()){?>
+        <tr>
+        <td><?php echo $row['WDSNO'] ?></td>
+        <td><?php echo $row['WDSX'] ?></td>
+        <td><?php echo $row['WDSY'] ?></td>
+        <td><?php echo $row['WTPC'] ?></td>
+        <td><?php echo $row['FWC'] ?></td>
+      </tr>
+      <?php }?>
+</tbody>
+  </table>
+  </center>
+</div>
+<p style="padding-left: 5%;padding-top: 1%;padding-right: 5%;font-size: larger;">
+<center>
+    <a href = "WDS1.php" class="btn btn-outline-info">View WDS Extended Data</a>
+  </form>
+  </center>
+
 </body>
 </html>

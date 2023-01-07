@@ -56,59 +56,22 @@ session_start();
       </div>
     </div>
   </nav>
-  
-  <div style="padding-top: 10%;padding-left: 8%;padding-right: 20%;">
-        <center>
-  <h3 style="color:rgb(0, 140, 255); padding-left: 5%;padding-top: 1%;letter-spacing: 1px; ">FRENCH WELLS</h3>
-
-<table class="table table-dark table-striped-columns">
-    <thead>
-
-      <tr>
-        <th scope="col">FWNO</th>
-        <th scope="col">FWX</th>
-        <th scope="col">FWY</th>
-      </tr>
-    </thead>
-    <tbody>
-        <?php
-    
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $databasename = "watermanagementsystem";
-    
-    // CREATE CONNECTION
-    $conn = new mysqli($servername,
-        $username, $password, $databasename);
-    
-    // GET CONNECTION ERRORS
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    
-    // SQL QUERY
-    $query = "SELECT * FROM `FWgen`;";
-    
-    // FETCHING DATA FROM DATABASE
-    $result = $conn->query($query);
-    
-        while ($row=$result->fetch_assoc()){?>
-        <tr>
-        <td><?php echo $row['FWNO'] ?></td>
-        <td><?php echo $row['FWX'] ?></td>
-        <td><?php echo $row['FWY'] ?></td>
-      </tr>
-      <?php }?>
-</tbody>
-  </table>
-  </center>
-</div>
-<p style="padding-left: 5%;padding-top: 1%;padding-right: 5%;font-size: larger;">
-<center>
-    <a href = "FW1.php" class="btn btn-outline-info">View FW Extended Data</a>
+  <center>
+  <form name="searchFW" method = "POST">
+  <h3 style='color:rgb(0, 140, 255); padding-left: 5%;padding-top: 1%;letter-spacing: 1px;'>
+  Which FW information do you want to enter?</h3>
+  <input type="text" name="FWsrch" placeholder = "FW number"/>
+    <button class = "btn btn-outline-info">Enter Data</button>
   </form>
+</center>
   </center>
+<?php
+  if(count($_POST)>0){
+  $SearchFW = $_POST['FWsrch'];
+  $_SESSION['FWsrch'] = $SearchFW;
+header("Location: FWIN1.php");
+}?>
+</p>
 
 </body>
-</html>
+<html>

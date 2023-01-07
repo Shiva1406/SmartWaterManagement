@@ -58,57 +58,98 @@ session_start();
   </nav>
   
   <div style="padding-top: 10%;padding-left: 8%;padding-right: 20%;">
+  
+  <!-- <th scope="col">WDSNo</th>
+        <th scope="col">WDSName</th>
+        <th scope="col">PumpCount</th>
+        <th scope="col">WDSDate</th>
+        <th scope="col">WDSTime</th>
+        <th scope="col">Inflow</th>
+        <th scope="col">Outflow</th>
+        <th scope="col">WDSX</th>
+        <th scope="col">WDSY</th> -->
+        <!-- <td><?php //echo $row['WDSDate'] ?></td>
+        <td><?php //echo $row['WDSTime'] ?></td>
+        <td><?php //echo $row['WDSWaterInflow'] ?></td>
+        <td><?php //echo $row['WaterOutflow'] ?></td>
+        <td><?php //echo $row['WDSX'] ?></td>
+        <td><?php //echo $row['WDSY'] ?></td> -->
         <center>
-  <h3 style="color:rgb(0, 140, 255); padding-left: 5%;padding-top: 1%;letter-spacing: 1px; ">FRENCH WELLS</h3>
-
+        <?php
+         $servername = "localhost";
+         $username = "root";
+         $password = "";
+         $databasename = "watermanagementsystem";
+         
+         // CREATE CONNECTION
+         $conn = new mysqli($servername,
+             $username, $password, $databasename);
+         
+         // GET CONNECTION ERRORS
+         
+         if ($conn->connect_error) {
+             die("Connection failed: " . $conn->connect_error);
+         }
+         $search = $_SESSION['WDSsrch'];
+         $sql = "SELECT * FROM WDSgen WHERE WDSNO= ?";
+            $statement = $conn->prepare($sql);
+            $statement->bind_param('i',$search);
+            $statement->execute();
+            $result = $statement->get_result();
+            while ($row = $result->fetch_assoc()) {
+                if (!empty($row)) {   
+                echo "<h3 style='color:rgb(0, 140, 255); padding-left: 5%;padding-top: 1%;letter-spacing: 1px;'>WDSNO:".$row['WDSNO']."</h3>";
+                }
+            }
+        ?>
+        
+        <?php
+  
+    // SQL QUERY
+    $query = "SELECT * FROM WDSinfo WHERE WDSNO=?;";
+    $statement = $conn->prepare($query);
+    $statement->bind_param('i',$_SESSION['WDSsrch']);
+    $statement->execute();
+    
+    // FETCHING DATA FROM DATABASE
+    $result = $statement->get_result();
+    $q = "SELECT * FROM WDSinfo WHERE WDSNO IN (SELECT WDSNO FROM WDSinfo);";
+    $st = $conn->prepare($query);
+    $st->bind_param('i',$_SESSION['WDSsrch']);
+    $st->execute();
+    $res = $st->get_result();
+    $r = $res->fetch_assoc();
+    if(empty($r)){
+        die("<center><h1 style='color:red ;padding-top:10%;padding-left:20%'>Record not found<h1></center>");
+    }
+    ?>
 <table class="table table-dark table-striped-columns">
     <thead>
-
       <tr>
-        <th scope="col">FWNO</th>
-        <th scope="col">FWX</th>
-        <th scope="col">FWY</th>
+        <th scope="col">WDSNo</th>
+        <th scope="col">WDSDate</th>
+        <th scope="col">Inflow</th>
+        <th scope="col">Outflow</th>
       </tr>
     </thead>
     <tbody>
-        <?php
-    
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $databasename = "watermanagementsystem";
-    
-    // CREATE CONNECTION
-    $conn = new mysqli($servername,
-        $username, $password, $databasename);
-    
-    // GET CONNECTION ERRORS
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    
-    // SQL QUERY
-    $query = "SELECT * FROM `FWgen`;";
-    
-    // FETCHING DATA FROM DATABASE
-    $result = $conn->query($query);
-    
-        while ($row=$result->fetch_assoc()){?>
+    <?php
+        while ($row=$result->fetch_assoc()){
+            if(!empty($row)){
+    ?>
         <tr>
-        <td><?php echo $row['FWNO'] ?></td>
-        <td><?php echo $row['FWX'] ?></td>
-        <td><?php echo $row['FWY'] ?></td>
+        <td><?php echo $row['WDSNO'] ?></td>
+        <td><?php echo $row['WDSDATE'] ?></td>
+        <td><?php echo $row['WDSWATERIN'] ?></td>
+        <td><?php echo $row['WDSWATEROUT'] ?></td>
       </tr>
-      <?php }?>
-</tbody>
+      <?php
+         }   
+    }
+        ?>
+    </tbody>
   </table>
   </center>
 </div>
-<p style="padding-left: 5%;padding-top: 1%;padding-right: 5%;font-size: larger;">
-<center>
-    <a href = "FW1.php" class="btn btn-outline-info">View FW Extended Data</a>
-  </form>
-  </center>
-
 </body>
-</html>
+<html>

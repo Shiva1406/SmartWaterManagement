@@ -8,6 +8,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </head>
+<?php
+session_start();
+?>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
@@ -55,6 +58,7 @@
   </nav>
   <figure class="text-center">
     <blockquote class="blockquote">
+    <p style="font-size:50px;padding-top: 50px;color:rgb(0, 140, 255); ">Welcome <?php echo $_SESSION['username'];?>!</p>
       <p style="font-size:60px;padding-top: 50px;color:rgb(0, 140, 255); ">What is Smart-Water Management?</p>
     </blockquote>
     <figcaption class="blockquote-footer" style = "font-size:20px">

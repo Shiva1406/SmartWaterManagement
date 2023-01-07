@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </head>
@@ -56,59 +57,44 @@ session_start();
       </div>
     </div>
   </nav>
-  
-  <div style="padding-top: 10%;padding-left: 8%;padding-right: 20%;">
-        <center>
-  <h3 style="color:rgb(0, 140, 255); padding-left: 5%;padding-top: 1%;letter-spacing: 1px; ">FRENCH WELLS</h3>
+  <figure class="text-center">
+    <blockquote class="blockquote">
+    <p style="font-size:50px;padding-top: 50px;color:rgb(0, 140, 255); ">Welcome <?php echo$_SESSION['username'];?>!</p>
+      <p style="font-size:60px;padding-top: 50px;color:rgb(0, 140, 255); ">What is Smart-Water Management?</p>
+    </blockquote>
+    <figcaption class="blockquote-footer" style = "font-size:20px">
+      the activity of planning, developing, distributing and managing <cite title="Source Title">water</cite>
+    </figcaption>
+  </figure>
+  <div class="text-center">
+    <img src="https://media.istockphoto.com/id/168415508/photo/water-drops-on-green-leaf.jpg?s=612x612&w=0&k=20&c=HX-Igo6HJZKZ5pvYqQIz4Llay_KqnQp88Uds0z5hJPo=" class="rounded" width="1000" height="500">
+  </div>
+  <center>
+  <h3 style="color:rgb(0, 140, 255); padding-left: 5%;padding-top: 1%;letter-spacing: 1px; ">What do you wish to do today?</h3>
+  <p style="padding-left: 5%;padding-top: 1%;padding-right: 5%;font-size: larger;">
+  <a class="btn btn-outline-primary" href = "FWIN.php">Enter Data</a>
+  <a class="btn btn-outline-info" href = "FrenchWells.php">View Data</a>
+  <br/>
+  <br/>
+</p>
+</center>
+  <h3 style="color:rgb(0, 140, 255); padding-left: 5%;padding-top: 4%;letter-spacing: 1.5px; ">Introduction</h3>
+  <p style="padding-left: 5%;padding-top: 1%;padding-right: 5%;font-size: larger;">
+    Smart water management systems can provide a more resilient and efficient water supply system, reducing costs and improving sustainability. High-technology solutions for the water sector 
+    include digital meters and sensors, supervisory control and data acquisition (SCADA) systems, and geographic information systems (GIS).
 
-<table class="table table-dark table-striped-columns">
-    <thead>
-
-      <tr>
-        <th scope="col">FWNO</th>
-        <th scope="col">FWX</th>
-        <th scope="col">FWY</th>
-      </tr>
-    </thead>
-    <tbody>
-        <?php
-    
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $databasename = "watermanagementsystem";
-    
-    // CREATE CONNECTION
-    $conn = new mysqli($servername,
-        $username, $password, $databasename);
-    
-    // GET CONNECTION ERRORS
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    
-    // SQL QUERY
-    $query = "SELECT * FROM `FWgen`;";
-    
-    // FETCHING DATA FROM DATABASE
-    $result = $conn->query($query);
-    
-        while ($row=$result->fetch_assoc()){?>
-        <tr>
-        <td><?php echo $row['FWNO'] ?></td>
-        <td><?php echo $row['FWX'] ?></td>
-        <td><?php echo $row['FWY'] ?></td>
-      </tr>
-      <?php }?>
-</tbody>
-  </table>
-  </center>
-</div>
-<p style="padding-left: 5%;padding-top: 1%;padding-right: 5%;font-size: larger;">
-<center>
-    <a href = "FW1.php" class="btn btn-outline-info">View FW Extended Data</a>
-  </form>
-  </center>
+This explainer is adapted from<mark style="color: rgb(0, 140, 255);background-color: white;"> proceedings of a workshop conducted by the Asian Development Bank (ADB) in Tashkent, Uzbekistan </mark>for the water sector. The workshop introduced smart systems and focused on remote monitoring of water networks using smart meters and other instruments.
+  </p>
+  <h3 style="color:rgb(0, 140, 255); padding-left: 5%;padding-top: 1%;letter-spacing: 1px; ">Why Smart Water Technology?</h3>
+  <p style="padding-left: 5%;padding-top: 1%;padding-right: 5%;font-size: larger;">
+    Smart technology can change conventional water and wastewater systems into instrumented, interconnected, and intelligent systems.
+    <ul style="padding-left: 9%;padding-top: -1%;padding-right: 5%;font-size: larger;">
+      <li>Instrumented: the ability to detect, sense, measure, and record data.</li>
+      <li>Interconnected: the ability to communicate and interact with system operators and managers.</li>
+      <li>Intelligent: the ability to analyze the situation, enable quick responses, and optimize troubleshooting solutions.</li>
+    </ul>
+    <img style="padding-left: 5%;" src="https://development.asia/sites/default/files/explainer/smart-water-mngt-system-01.jpg" class="rounded"width="1000" height="500">
+  </p>
 
 </body>
 </html>

@@ -8,6 +8,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </head>
+<?php
+session_start();
+?>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
@@ -53,19 +56,18 @@
       </div>
     </div>
   </nav>
+  
   <div style="padding-top: 10%;padding-left: 8%;padding-right: 20%;">
-<table class="table table-dark table-striped-columns" action = "WTP1.php">
+        <center>
+  <h3 style="color:rgb(0, 140, 255); padding-left: 5%;padding-top: 1%;letter-spacing: 1px; ">WATER TREATMENT PLANTS</h3>
+
+<table class="table table-dark table-striped-columns">
     <thead>
+
       <tr>
         <th scope="col">WTPNo</th>
         <th scope="col">WTPName</th>
         <th scope="col">PumpCount</th>
-        <th scope="col">WTPDate</th>
-        <th scope="col">WTPTime</th>
-        <th scope="col">Inflow</th>
-        <th scope="col">Outflow</th>
-        <th scope="col">WTPX</th>
-        <th scope="col">WTPY</th>
       </tr>
     </thead>
     <tbody>
@@ -86,111 +88,27 @@
     }
     
     // SQL QUERY
-    $query = "SELECT * FROM `watertreatmentplant`;";
+    $query = "SELECT * FROM `wtpgen`;";
     
     // FETCHING DATA FROM DATABASE
     $result = $conn->query($query);
     
         while ($row=$result->fetch_assoc()){?>
         <tr>
-        <td><?php echo $row['WtpNo'] ?></td>
-        <td><?php echo $row['WtpName'] ?></td>
-        <td><?php echo $row['PumpCount'] ?></td>
-        <td><?php echo $row['WtpDate'] ?></td>
-        <td><?php echo $row['WtpTime'] ?></td>
-        <td><?php echo $row['WtpWaterInflow'] ?></td>
-        <td><?php echo $row['WaterOutflow'] ?></td>
-        <td><?php echo $row['WtpX'] ?></td>
-        <td><?php echo $row['WtpY'] ?></td>
+        <td><?php echo $row['WTPNO'] ?></td>
+        <td><?php echo $row['WTPNAME'] ?></td>
+        <td><?php echo $row['PUMPCOUNT'] ?></td>
       </tr>
-      <?php
-        }
-        ?>
-      <tr>
-    </tbody>
+      <?php }?>
+</tbody>
   </table>
+  </center>
 </div>
-<?php
-  
-  $servername = "localhost";
-  $username = "root";
-  $password = "";
-  $databasename = "watermanagementsystem";
-  
-  // CREATE CONNECTION
-  $conn = new mysqli($servername,
-    $username, $password, $databasename);
-  
-  // GET CONNECTION ERRORS
-  if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
-  }
-  
-  // SQL QUERY
-  $query = "SELECT * FROM `watertreatmentplant`;";
-  
-  // FETCHING DATA FROM DATABASE
-  $result = $conn->query($query);
-  
-    if ($result->num_rows > 0) 
-    {
-        // OUTPUT DATA OF EACH ROW
-        /*
-WtpNo	
-WtpName	
-PumpCount	
-WtpDate	
-WtpTime	
-WtpWaterInflow	
-WaterOutflow	
-WtpX	
-WtpY*/
-// echo "<table border='1'>";
-// echo "<tr>";
-// echo "<th>".'Show'."</th>";
-// echo "<th>".'TVDBID'."</th>";
-// echo "<th>".'AirsDayOfWeek'."</th>";
-// echo "<th>".'AirsTime'."</th>";
-// echo "<th>".'Status'."</th>";
-// echo "<th>".'Edit'."</th>";
-// echo "<tr>";
+<p style="padding-left: 5%;padding-top: 1%;padding-right: 5%;font-size: larger;">
+<center>
+    <a href = "WTP1.php" class="btn btn-outline-info">View WTP Extended Data</a>
+  </form>
+  </center>
 
-// while ($row = $result->fetch_assoc()) {
-//     echo "<tr>";
-//     echo "<td>".$row["WtpNo"]."</td>";
-//     echo "<td>".$row["WtpNo"]."</td>";
-//     echo "<td>".$row["WtpName"]."</td>";
-//     // echo "<td>".strftime("%l:%M %p", strtotime($row['AirsTime']))."</td>";
-//     // echo "<td>".$row['sStatus']."</td>";
-//     // echo "<td><formb name=".$row['TVDBID']." action='DeleteShow.php?id=".$row['TVDBID']."'>"."<input type='submit' value='Delete'/></formb></td>";
-//     // echo "<tr>";
-// }
-
-// echo "</tr>";
-// echo "</table>";
-//         while($row = $result->fetch_assoc())
-//         {
-//             echo "WTP NO:: " .
-//                 $row["WtpNo"]. " - WTPName: " .
-//                 $row["WtpName"]. " | PumpCount: " . 
-//                 $row["PumpCount"]. " | WTPDate: " . 
-//                 $row["WtpDate"]. "|WTPTime:".
-//                 $row["WtpTime"]."|WaterInflow:".
-//                 $row["WtpWaterInflow"]."|WaterOutflow".
-//                 $row["WaterOutflow"]."|WTPX".
-//                 $row["WtpX"]."|WTPY".
-//                 $row["WtpY"]. "<br>";
-//         }
-//     } 
-//     else {
-//         echo "0 results";
-//     }
-  
-//    $conn->close();
-}
-?>
-<div>
-  <img style="padding-left: 60%;padding-right: 3%;" src="https://cablecommunity.com/wp-content/uploads/2019/11/sewage-treatment-plant.jpg" class="rounded" height="300" width="100">
-</div>
 </body>
-<html>
+</html>
